@@ -1,17 +1,102 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+  <ion-toolbar color="tertiary">
+    <img slot="start" class="logoapp" src="/assets/banners/LOGO-250x110px-01.png">
+    <ion-searchbar placeholder="Search for products"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="getProducts == undefined || getProducts.length === 0 " class="spinner">
+    <ion-spinner name="lines"></ion-spinner>
+  </div>
+  <ion-item lines="none" color="warning">
+    <ion-icon class="label" slot="start" name="location"></ion-icon>
+    <ion-label class="label">Deliver to:</ion-label>
+  </ion-item>
+  <ion-slides [options]="slideOpts">
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/Spices_1000x600px.png">
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/K&ns_1000x600px.png">
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/Shop_1000x600px.png">
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/first.png">
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/Veg_1000x600px.png">
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="banner first">
+      <ion-card>
+        <img src="/assets/banners/Vegeis_1000x600px.png">
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <img class="sec" src="https://usercontent2.hubstatic.com/7197541.jpg">
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <img class="sec" src="https://www.aal-europe.eu/wp-content/uploads/2014/10/yellow.jpg">
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <img class="sec" src="https://assets.wordpress.envato-static.com/uploads/2018/01/image1.png">
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item lines="none">
+    <h2 class="tops">Top Sellers</h2>
+  </ion-item>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!--product section-->
+  <ion-slides (ionSlideReachEnd)="moreData($event)" [options]="optionse">
+    <ion-slide *ngFor="let data of getProducts" >
+      <ion-card>
+        <ion-badge class="badge" text-capitalize>{{data.stock_status}}</ion-badge>
+        <img [src]="data.images[0].src" [alt]="data.name">
+        <ion-card-content>
+          <ion-card-title>
+            <ion-row>
+              <ion-col>
+                <h6 class="subtitle">{{data.name}}</h6>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col no-padding>
+                <ion-text text-left><span class="price"><span class="inline">{{data.currency}}</span>
+                    <strong>${{data.regular_price}}</strong></span></ion-text>
+              </ion-col>
+              <ion-col *ngIf="!data.offer" no-padding>
+                <ion-text text-left><span class="price"><strong>{{data.currency}}{{data.cost_price}}</strong></span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+
 </ion-content>

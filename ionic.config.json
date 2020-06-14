@@ -1,5 +1,7 @@
 {
   "name": "grocery",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
